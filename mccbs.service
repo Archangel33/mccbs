@@ -1,0 +1,13 @@
+
+[Unit]
+Description=Minecraft Craftbukkit Server
+Documentation=man:mccbs.service(8) man:mccbs.conf(5)
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=
+ExecReload=...
+
+[Install]
+Wantedby=multi-user.target
