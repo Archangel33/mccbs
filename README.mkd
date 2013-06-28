@@ -4,6 +4,29 @@ mccbs is a systemd .service for all \*nix systems now using systemd instead of t
 
 This is also A project to help ME understand systemd, As well as get things kickstarted in git as well as bash scripting including anything in between and along the way. I know its a big cookie but you have to start somewhere. 
 
+Devel Roadmap
+-------------
+This is the basic development roadmap, which *loosely* outlines the direction of the project subject to change at anytime and with no hard dates set if at all.
+
+#### Phase 1: Back to the Basics ####
+ 1. Strip all extrenous features from minecraft-init. (keep for later)
+ 2. Set up only whats needed for a systemd service
+
+#### Phase 2: Basic Expected Features ####
+*The order here is irrelevent which ever is easier to implement*
+ 1. Add systemd service options
+ 2. Re-implement a .conf for ease of use
+
+#### Phase 3: Paradigm Shift  ####
+ 1. Script to send commands from bash
+ 2. Re-implement removed features
+
+#### Phase 4: Feature Requests ####
+ * Interactive mode (removal of screen requirement)
+ * Add any features added to minecraft-init that were missed since devel start.
+ * Requested Features as time permits
+
+
 Features
 --------
  * None yet Just Started!
@@ -23,7 +46,7 @@ systemd Requirements
 --------------------
 screen
 
-<!--Access server console 
+Access server console 
 =====================
 
 	screen -r minecraft
@@ -31,10 +54,10 @@ screen
 Exit the console
 	
 	Ctrl+A D
--->
+
 Setup
 =====
-
+**Yet to Come**
 <!-- 1. Symlink the minecraft file to `/etc/init.d/minecraft`, set the required premissions and update rc.d.
 
 		sudo ln -s ~/minecraft-init/minecraft /etc/init.d/minecraft
@@ -76,7 +99,8 @@ Good stuff
 
 [systemd in Arch](https://wiki.archlinux.org/index.php/Systemd) 
 
-[![Flattr Ahtenus/minecraft-int](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=Ahtenus&url=https://github.com/Ahtenus/minecraft-init&title=minecraft-init&language=en_GB&tags=github&category=software) 
+Flattr Ahtenus/minecraft-init
+[![Flattr Ahtenus/minecraft-init](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=Ahtenus&url=https://github.com/Ahtenus/minecraft-init&title=minecraft-init&language=en_GB&tags=github&category=software) 
 
 [Backup rotation script](https://github.com/adamfeuer/rotate-backups) good if you want some kind or rolling of the world backups.
 
