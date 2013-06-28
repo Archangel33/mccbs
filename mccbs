@@ -1,8 +1,8 @@
 #!/bin/bash
-# /etc/init.d/minecraft
+# /etc/systemd/mccbs
 
 ### BEGIN INIT INFO
-# Provides:   minecraft
+# Provides:   MCCBS
 # Required-Start: $local_fs $remote_fs
 # Required-Stop:  $local_fs $remote_fs
 # Should-Start:   $network
@@ -10,31 +10,72 @@
 # Default-Start:  2 3 4 5
 # Default-Stop:   0 1 6
 # Short-Description:    Minecraft server
-# Description:    Init script for minecraft/bukkit server, with rolling logs and use of ramdisk for less lag. 
+# Description:   Starts/Stops/Restarts a Craftbukkit Minecraft server.
 ### END INIT INFO
 
-# Created by Ahtenus
+# Created by Archangel33
+
+#Forked from https://github.com/Ahtenus/minecraft-init 
+# Originally Created by Ahtenus
 
 # Based on http://www.minecraftwiki.net/wiki/Server_startup_script
 # Support for multiworld by Benni-chan
 # Log rolls without needing restarts by Solorvox
 # Option for killing server in an emergency by jbondhus
 
-# Loads config file
+#### Default settings ####
+# Server Jar file
+MC_JAR='minecraft_server.jar'
+CB_JAR='craftbukkit.jar'
+SERVICE=$CB_JAR
 
-if [ -L $0 ]
-then
-	source `readlink -e $0 | sed "s:[^/]*$:config:"`
-else
-	source `echo $0 | sed "s:[^/]*$:config:"`
-fi
+# Craftbukit release chanels.
+# While minecraft-init's release channels string mangling is slick,
+# I prefer to have defaults. Who knows, may change back later.
+CB_RC_DEV='dl.bukkit.org/latest-dev/craftbukkit.jar'
+CB_RC_BETA='dl.bukkit.org/latest-beta/craftbukkit.jar'
+CB_RC_RB='dl.bukkit.org/latest-rb/craftbukkit.jar'
+CB_RC=$CB_RC_RB
 
-if [ "$SERVICE" == "" ]
-then
-	echo "Couldn't load config file, please edit config.example and rename it to config"
-	logger -t minecraft-init "Couldn't load config file, please edit config.example and rename it to config"
-	exit
-fi
+# Screen instance name
+SCREEN='MCCBS_Screen'
+
+# User/Group which can run the server
+USERNAME='minecraft_adm'
+USERGROUP='minecraft_adm'
+
+# Path to Server directory
+MCPATH='/opt/craftbukkit' # Why Here? --> Don't ask. Because...
+
+# Default world name
+DEFAULTWORLD='world'
+
+# Location where world saves exist. Can't be the same as MCPATH.
+# You need to move your worlds to this directory mannually (for now),
+# the script will handle the nessesary sumlinks. <-- cool!
+WORLDSTORAGE="${MCPATH}/worlds"
+
+# Number of CPUs/cores to use
+CPU_COUNT=1
+
+# Initial memory usage
+INITMEM="1024M"
+
+# Maximum amount of memory to use
+# Remember: if planning on using a ramdisk, give the ramdisk enough space,
+# subtract from the total amount of RAM available, the size of your map and
+# the RAM-consumption of your base system.
+MAXMEM="1024M"
+
+# Default options for minecraft server jvm 
+OPTIONS="nogui"
+
+# Default invocation built from previous defaults 
+INVOCATION="java -Xmx$MAXMEM -Xms$INITMEM -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParrelGCThreads=$CPU_COUNT -XX:+AggressiveOpts -jar $SERVICE $OPTIONS"
+
+
+
+# File Config parsing will go here
 
 ME=`whoami`
 as_user() {
@@ -909,6 +950,4 @@ case "$1" in
 		echo "No such command, see $0 help"
 		exit 1
 		;;
-esac
-
 exit 0
