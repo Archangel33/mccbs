@@ -23,6 +23,20 @@
 # Log rolls without needing restarts by Solorvox
 # Option for killing server in an emergency by jbondhus
 
+#### Deamon Boiler Opts ####
+# Get Full Path to Daemon
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )"&& pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+# Set to more descriptive name (OCD)
+DAEMON_PATH=$DIR    
+
+
 #### Default settings ####
 # Server Jar file
 MC_JAR='minecraft_server.jar'
